@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Booking Form</title>
+    <h1>Restaurant Booking Form</h1>
+    <form id="bookingForm">
+        <label for="bookingChoice">Choice of Booking:</label>
+        <select id="bookingChoice" name="bookingChoice">
+            <option value="fullDay">Full day booking</option>
+            <option value="halfDay">Half day booking</option>
+            <option value="hourly">Hourly booking</option>
+        </select>
+        <br><br>
+
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+        <br><br>
+
+        <label for="mobile">Mobile number:</label>
+        <input type="tel" id="mobile" name="mobile" maxlength="10">
+        <br><br>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        <br><br>
+
+        <label for="persons">Number of persons:</label>
+        <input type="number" id="persons" name="persons" required>
+        <br><br>
+        <button type="submit">Submit</button>
+    </form>
+</head>
+<body>
+    
+ <div id="dynamicFields"></div>
+        
+     
+
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+    integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+    const bookingChoice = document.getElementById('bookingChoice');
+    const dynamicFields = document.getElementById('dynamicFields');
+
+    // Listen for changes in the booking choice dropdown
+    bookingChoice.addEventListener('change', handleBookingChange);
+
+    function handleBookingChange() {
+        // Clear previous dynamic fields
+        dynamicFields.innerHTML = '';
+
+        // Get the selected booking type
+        const selectedBooking = bookingChoice.value;
+
+        // Create common date field
+        const dateLabel = document.createElement('label');
+        dateLabel.textContent = 'Date:';
+        const dateInput = document.createElement('input');
+        dateInput.type = 'date';
+        dateInput.id = 'date';
+        dateInput.name = 'date';
+        dynamicFields.appendChild(dateLabel);
+        dynamicFields.appendChild(dateInput);
+        dynamicFields.appendChild(document.createElement('br'));
+        dynamicFields.appendChild(document.createElement('br'));
+
+        // Handle different booking types
+        if (selectedBooking === 'halfDay') {
+            createSlotField(); // Show slot options
+        } else if (selectedBooking === 'hourly') {
+            createTimeField(); // Show time field
+        }
+    }
+
+    function createSlotField() {
+        const slotLabel = document.createElement('label');
+        slotLabel.textContent = 'Slot:';
+        const slotSelect = document.createElement('select');
+        slotSelect.id = 'slot';
+        slotSelect.name = 'slot';
+
+        const breakfastOption = document.createElement('option');
+        breakfastOption.value = 'breakfast';
+        breakfastOption.textContent = 'Breakfast';
+
+        const lunchOption = document.createElement('option');
+        lunchOption.value = 'lunch';
+        lunchOption.textContent = 'Lunch';
+
+        const dinnerOption = document.createElement('option');
+        dinnerOption.value = 'dinner';
+        dinnerOption.textContent = 'Dinner';
+
+        slotSelect.appendChild(breakfastOption);
+        slotSelect.appendChild(lunchOption);
+        slotSelect.appendChild(dinnerOption);
+
+        dynamicFields.appendChild(slotLabel);
+        dynamicFields.appendChild(slotSelect);
+        dynamicFields.appendChild(document.createElement('br'));
+        dynamicFields.appendChild(document.createElement('br'));
+    }
+    function createTimeField() {
+        const timeLabel = document.createElement('label');
+        timeLabel.textContent = 'Time:';
+        const timeInput = document.createElement('input');
+        timeInput.type = 'time';
+        timeInput.id = 'time';
+        timeInput.name = 'time';
+
+        dynamicFields.appendChild(timeLabel);
+        dynamicFields.appendChild(timeInput);
+        dynamicFields.appendChild(document.createElement('br'));
+        dynamicFields.appendChild(document.createElement('br'));
+    }
+});
+</script>
+</html>
+</body>
